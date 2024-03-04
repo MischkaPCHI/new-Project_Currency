@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./styles/style.css">
+    <script src="./scripts/index.js" defer></script>
+    <audio id="alertSound">
+        <source src="./sound/Kozel-Oret.mp3" type="">
+    </audio>
+    <audio id="alertSound2">
+        <source src="./sound/tyutyu.mp3" type="">
+    </audio>
+
+    <title>Currency Calculator</title>
+
+</head>
+<body>
+    <div class="main-box2">
+        <div class="main-box">
+            
+            <h1>Currency Calculator</h1>
+            
+            <form class="position" action="">
+
+                <div class="input-output">
+                    <div class="input">
+
+                        <input class="value-input" type="text" placeholder="Insert value">
+                        
+                        <div class="result">
+
+                            <p>Result: </p>
+                            <div id="result"></div>
+        
+                        </div>
+                    </div>
+                    <div class="currency">
+                        <div class="from">
+                            <label class="label" id="from" for="currency">Convert from:</label>
+
+                            <select class="select" name="currency" id="cur1">
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                        <div class="to">
+                            <label class="label" id="to" for="currency">Convert to: </label>
+
+                            <select class="select" name="currency" id="cur2">
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="USD">USD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-box">
+
+                    <button class="button" id="clear" type="reset">Reset</button>
+                    <button class="button" id="calculate" type="submit">Calculate</button>
+                    
+                </div>
+
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>
