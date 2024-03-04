@@ -12,6 +12,7 @@ const alertSound2 = document.querySelector('#alertSound2');
 let userInputCurrencyValue;
 let userInputConvertFrom;
 let userInputConvertTo;
+let rates;
 
 const responseFromServerPromise = (q) => {
     return fetch (q);
@@ -20,24 +21,21 @@ const responseFromServerPromise = (q) => {
 const serverWorksGBP = async (q) => {
     const serverResponse = await responseFromServerPromise(q);
     const body = await serverResponse.json();
-    console.log(body.rates);
-    return body.rates;
+    rates = body.rates;
+    pushToHtml(rates);
+    convertCurrency();
 }
 serverWorksGBP('https://openexchangerates.org/api/latest.json?app_id=c56da6a380da489ea5745895577c2ac4');
 
-const serverWorksUSD = async (q) => {
-    const serverResponse = await responseFromServerPromise(q);
-    const body = await serverResponse.json();
-    console.log(body.rates.USD);
-    return body.rates.USD;
-}
-serverWorksUSD('https://openexchangerates.org/api/latest.json?app_id=c56da6a380da489ea5745895577c2ac4');
-
 function pushToHtml (elem) {
-    const container = document.querySelector('#info');
-    const element = document.createElement('li');
-    element.textContent = elem;
-    container.append(element);
+    for (let key in elem) {
+    const elementFrom = document.createElement('option');
+    const elementTo = document.createElement('option');
+    elementFrom.textContent = key;
+    elementTo.textContent = key;
+    convertFrom.append(elementFrom);
+    convertTo.append(elementTo);
+    }
 }
 
 const inputFieldCurrencyValue = (evt) => {
@@ -68,26 +66,17 @@ function convertCurrency(evt) {
     if (!userInputCurrencyValue){
         showAlertWithSound();
         return;
-    }
-    switch(userInputConvertFrom){
-        case 'GBP': firstRate = serverWorksGBP('https://openexchangerates.org/api/latest.json?app_id=c56da6a380da489ea5745895577c2ac4');
-        break;
-        case 'USD': firstRate = serverWorksUSD('https://openexchangerates.org/api/latest.json?app_id=c56da6a380da489ea5745895577c2ac4');
-        break;
-        default:
-            firstRate = 1;
-    }
+    } 
+    let firstRate = rates[userInputConvertFrom] || 1;
+    let secondRate = rates[userInputConvertTo] || 1;
 
-    switch(userInputConvertTo){
-        case 'GBP': secondRate = serverWorksGBP('https://openexchangerates.org/api/latest.json?app_id=c56da6a380da489ea5745895577c2ac4');
-        break;
-        case 'USD': secondRate = serverWorksUSD('https://openexchangerates.org/api/latest.json?app_id=c56da6a380da489ea5745895577c2ac4');
-        break;
-        default:
-            secondRate = 1;
-    }
-    result.textContent = (userInputCurrencyValue / firstRate) * secondRate;
+    console.log(firstRate);
+    console.log(secondRate);
+
+    result.textContent = (userInputCurrencyValue / firstRate) * secondRate;   
+
 }
+
 
 const resetButtonHandler = () => {
     let resetResult = "";
